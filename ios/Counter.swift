@@ -1,8 +1,7 @@
 //
 //  Counter.swift
 //  nativeModuleIos
-//
-//  Created by Varun Nath on 23/03/22.
+
 //
 
 import Foundation
@@ -15,7 +14,7 @@ class Counter: RCTEventEmitter{
   @objc
   func increment(_ callback:RCTResponseSenderBlock){
     count += 1;
-//    print(count);
+  //  print(count);
     callback([count])
     sendEvent(withName: "onIncrement", body: ["count increase",count])
   }
@@ -44,9 +43,9 @@ class Counter: RCTEventEmitter{
       reject("ERROR_COUNT","count cannot be negative",error);
     }
     else{
-      count -= 1; 
+      count -= 2; 
       resolve("count is \(count)");
-      sendEvent(withName: "onDecrement", body: ["count decrease",count])
+      sendEvent(withName: "onDecrement", body: ["downnnnniiing",count])
     }
   }
   

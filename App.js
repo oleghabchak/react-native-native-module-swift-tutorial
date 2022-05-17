@@ -1,6 +1,7 @@
-import React, {useEffect} from 'react';
+import React, {useEffect,  useState } from 'react';
 import {View, Text, StyleSheet, Button} from 'react-native';
-import {NativeModules, NativeEventEmitter} from 'react-native';
+import { NativeModules, NativeEventEmitter} from 'react-native';
+
 
 // console.log(NativeModules.Counter);
 // NativeModules.Counter.increment(value => {
@@ -11,6 +12,7 @@ import {NativeModules, NativeEventEmitter} from 'react-native';
 const CounterEvents = new NativeEventEmitter(NativeModules.Counter);
 
 const App = props => {
+  const [ count , setCount ] = useState(0);
   useEffect(() => {
     CounterEvents.addListener('onIncrement', result =>
       console.log('onIncrement received', result),
@@ -24,23 +26,26 @@ const App = props => {
     };
   }, []);
 
+
   const decrement = async () => {
     try {
       var result = await NativeModules.Counter.decrement();
-      console.log(result);
+      setCount(result);
     } catch (e) {
       console.log(e.message, e.code);
     }
   };
+
   const increment = async () => {
-    NativeModules.Counter.increment(res => console.log(res));
+    NativeModules.Counter.increment(res => setCount(res));
+    
   };
 
   return (
     <View style={styles.container}>
-      <Text>App</Text>
+      <Text>Count {count}</Text>
       <Button title="Increase Count" onPress={increment} />
-
+  
       <Button title="Decrease Count" onPress={decrement} />
     </View>
   );
